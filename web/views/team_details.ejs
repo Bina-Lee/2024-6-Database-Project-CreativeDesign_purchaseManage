@@ -22,20 +22,20 @@
     <thead>
       <tr>
         <th>Record ID</th>
+        <th>Item Name</th>
         <th>Remaining Budget</th>
         <th>Status</th>
         <th>Last Update</th>
-        <th>Request Details</th>
       </tr>
     </thead>
     <tbody>
       <% purchaseRecords.forEach((record) => { %>
         <tr>
           <td><%= record.purchaseRecordId %></td>
+          <td><%= record.requestItemName %></td>
           <td><%= record.remainBudget %></td>
           <td><%= record.status %></td>
           <td><%= record.updateDateTime %></td>
-          <td><%= record.requestDetails %></td>
         </tr>
       <% }); %>
     </tbody>

@@ -41,15 +41,20 @@ exports.getTeamsByProject = async (req, res) => {
   }
 };
 
-// 특정 팀의 상세 조회
+// 팀 상세 정보 가져오기
 exports.getTeamDetails = async (req, res) => {
   const { teamId } = req.params;
+
   try {
+    // 팀 멤버 가져오기
     const teamMembers = await teamDAO.getTeamMembers(teamId);
+
+    // 구매 기록과 itemName 가져오기
     const purchaseRecords = await teamDAO.getPurchaseRecords(teamId);
+
     res.render('team_details', { teamMembers, purchaseRecords });
   } catch (err) {
-    console.error('Error fetching team details:', err);
-    res.status(500).send('Internal Server Error');
+    console.error(err);
+    res.status(500).send('서버 오류가 발생했습니다.');
   }
 };

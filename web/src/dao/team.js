@@ -38,23 +38,22 @@ exports.getTeamMembers = async (teamId) => {
   }
 };
 
-// 특정 팀의 구매 기록 조회
+// 팀의 구매 기록과 itemName 가져오기
 exports.getPurchaseRecords = async (teamId) => {
-  try {
-    const [rows] = await pool.query(
-      `
-      SELECT pr.purchaseRecordId, pr.remainBudget, pr.status, pr.updateDateTime, rp.itemName
-      FROM PurchaseRecord pr
-      LEFT JOIN RequestPurchase rp ON pr.requestPurchaseId = rp.requestPurchaseId
-      WHERE pr.teamId = ?
-      `,
-      [teamId]
-    );
-    return rows;
-  } catch (err) {
-    console.error('Database query error:', err);
-    throw err;
-  }
+  const query = `
+    SELECT 
+      pr.purchaseRecordId, 
+      rp.itemName AS requestItemName,
+      pr.remainBudget, 
+      pr.status, 
+      pr.updateDateTime
+    FROM PurchaseRecord pr
+    JOIN RequestPurchase rp ON pr.requestPurchaseId = rp.requestPurchaseId
+    WHERE pr.teamId = ?
+    ORDER BY pr.updateDateTime DESC
+  `;
+  const [rows] = await pool.query(query, [teamId]);
+  return rows;
 };
 
 // 모든 코스 목록 가져오기

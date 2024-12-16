@@ -58,3 +58,40 @@ exports.getTeamDetails = async (req, res) => {
     res.status(500).send('서버 오류가 발생했습니다.');
   }
 };
+
+// 팀 상세 관리 페이지 렌더링
+exports.getTeamManageDetails = async (req, res) => {
+  const { teamId } = req.params;
+
+  try {
+    // 팀 멤버 가져오기
+    const teamMembers = await teamDAO.getTeamMembers(teamId);
+
+    // 구매 기록 가져오기
+    const purchaseRecords = await teamDAO.getPurchaseRecords(teamId);
+
+    res.render('team_manage_details', { teamMembers, purchaseRecords });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('서버 오류가 발생했습니다.');
+  
+};
+
+// 구매 기록 상태 업데이트 (APPROVE or REJECT)
+exports.updatePurchaseStatus = async (req, res) => {
+  const { recordId } = req.params;
+  const { action } = req.body; // action: "APPROVE" 또는 "REJECT"
+
+  try {
+    if (action === 'APPROVE' || action === 'REJECT') {
+      await teamDAO.updatePurchaseStatus(recordId, action);
+      res.redirect('back'); // 이전 페이지로 리디렉트
+    } else {
+      res.status(400).send('잘못된 요청입니다.');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('상태 업데이트 중 오류가 발생했습니다.');
+
+  }
+};

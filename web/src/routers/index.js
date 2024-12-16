@@ -12,8 +12,9 @@ const purchaseController = require('../controllers/purchase');
 /* ADMIN 페이지 */
 router.get('/admin/team/add', teamController.getAddTeamPage);
 router.get('/admin/project/:projectId/teams', teamController.getTeamsByProject);
-router.get('/admin/team/:teamId', teamController.getTeamDetails);
+router.get('/admin/team/:teamId', teamController.getTeamDetails); // ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌ
 router.get('/admin/teamMember/add', teamMemberController.getAddTeamMemberPage);
+router.get('/admin/team/manage/:teamId', teamController.getTeamManageDetails);
 router.get('/admin/main', (req, res) => res.render('admin_main'));
 router.get('/admin/info', async (req, res) => {
     try {
@@ -40,5 +41,6 @@ router.post('/student/login', studentController.postLogin);
 router.post('/admin/team/add', teamController.postAddTeam);
 router.post('/admin/teamMember/add', teamMemberController.postAddTeamMember);
 router.post('/student/purchase', purchaseController.postPurchaseRequest);
+router.post('/admin/purchase/:recordId/status', teamController.updatePurchaseStatus);
 
 module.exports = router;

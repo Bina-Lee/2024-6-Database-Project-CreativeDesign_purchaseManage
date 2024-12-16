@@ -141,7 +141,6 @@
 
     <h4>Teams in Selected Project</h4>
     <ul id="team-list">
-      <!-- JavaScript로 동적 렌더링 -->
     </ul>
   </div>
 
@@ -223,7 +222,7 @@
 
         teams.forEach((team) => {
           const li = document.createElement('li');
-          li.innerHTML = `<a href="/admin/team/${team.teamId}">${team.name}</a> (Personnel: ${team.personnel}, Course: ${team.courseName})`;
+          li.innerHTML = `<a href="/admin/team/manage/${team.teamId}">${team.name}</a> (Personnel: ${team.personnel}, Course: ${team.courseName})`;
           teamList.appendChild(li);
         });
       } catch (err) {

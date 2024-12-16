@@ -56,6 +56,16 @@ exports.getPurchaseRecords = async (teamId) => {
   return rows;
 };
 
+// 구매 기록 상태 업데이트 (APPROVE 또는 REJECT)
+exports.updatePurchaseStatus = async (recordId, status) => {
+  const query = `
+    UPDATE PurchaseRecord 
+    SET status = ?
+    WHERE purchaseRecordId = ?
+  `;
+  await pool.query(query, [status, recordId]);
+};
+
 // 모든 코스 목록 가져오기
 exports.getCourses = async () => {
   const query = `SELECT courseId, name FROM Course`;

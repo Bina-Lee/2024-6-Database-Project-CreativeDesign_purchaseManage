@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Management</title>
+</head>
+<body>
+  <h2>Team Management</h2>
+
+  <!-- 팀 멤버 -->
+  <h3>Team Members</h3>
+  <ul>
+    <% teamMembers.forEach((member) => { %>
+      <li><strong><%= member.name %></strong></li>
+    <% }); %>
+  </ul>
+
+  <!-- 구매 기록 -->
+  <h3>Purchase Records</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Record ID</th>
+        <th>Item Name</th>
+        <th>Remaining Budget</th>
+        <th>Status</th>
+        <th>Last Update</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% purchaseRecords.forEach((record) => { %>
+        <tr>
+          <td><%= record.purchaseRecordId %></td>
+          <td><%= record.requestItemName %></td>
+          <td><%= record.remainBudget %></td>
+          <td><%= record.status %></td>
+          <td><%= record.updateDateTime %></td>
+          <td>
+            <% if (record.status === 'PENDING') { %>
+              <form action="/admin/purchase/<%= record.purchaseRecordId %>/status" method="POST" style="display:inline;">
+                <input type="hidden" name="action" value="APPROVE">
+                <button type="submit">승인</button>
+              </form>
+              <form action="/admin/purchase/<%= record.purchaseRecordId %>/status" method="POST" style="display:inline;">
+                <input type="hidden" name="action" value="REJECT">
+                <button type="submit">거절</button>
+              </form>
+            <% } else { %>
+              <span><%= record.status %></span>
+            <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>

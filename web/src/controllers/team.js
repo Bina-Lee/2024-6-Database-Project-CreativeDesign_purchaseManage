@@ -74,7 +74,7 @@ exports.getTeamManageDetails = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('서버 오류가 발생했습니다.');
-  }
+  
 };
 
 // 구매 기록 상태 업데이트 (APPROVE or REJECT)
@@ -92,5 +92,6 @@ exports.updatePurchaseStatus = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('상태 업데이트 중 오류가 발생했습니다.');
+
   }
 };
